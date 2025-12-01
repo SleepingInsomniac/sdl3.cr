@@ -1,0 +1,310 @@
+lib LibSdl3
+  enum PixelType
+    Unknown # SDL_PIXELTYPE_UNKNOWN
+    Index1 # SDL_PIXELTYPE_INDEX1
+    Index4 # SDL_PIXELTYPE_INDEX4
+    Index8 # SDL_PIXELTYPE_INDEX8
+    Packed8 # SDL_PIXELTYPE_PACKED8
+    Packed16 # SDL_PIXELTYPE_PACKED16
+    Packed32 # SDL_PIXELTYPE_PACKED32
+    Arrayu8 # SDL_PIXELTYPE_ARRAYU8
+    Arrayu16 # SDL_PIXELTYPE_ARRAYU16
+    Arrayu32 # SDL_PIXELTYPE_ARRAYU32
+    Arrayf16 # SDL_PIXELTYPE_ARRAYF16
+    Arrayf32 # SDL_PIXELTYPE_ARRAYF32
+    Index2 # SDL_PIXELTYPE_INDEX2
+  end
+
+  enum BitmapOrder
+    None # SDL_BITMAPORDER_NONE
+    B4321 # SDL_BITMAPORDER_4321
+    B1234 # SDL_BITMAPORDER_1234
+  end
+
+  enum PackedOrder
+    None # SDL_PACKEDORDER_NONE
+    Xrgb # SDL_PACKEDORDER_XRGB
+    Rgbx # SDL_PACKEDORDER_RGBX
+    Argb # SDL_PACKEDORDER_ARGB
+    Rgba # SDL_PACKEDORDER_RGBA
+    Xbgr # SDL_PACKEDORDER_XBGR
+    Bgrx # SDL_PACKEDORDER_BGRX
+    Abgr # SDL_PACKEDORDER_ABGR
+    Bgra # SDL_PACKEDORDER_BGRA
+  end
+
+  enum ArrayOrder
+    None # SDL_ARRAYORDER_NONE
+    Rgb # SDL_ARRAYORDER_RGB
+    Rgba # SDL_ARRAYORDER_RGBA
+    Argb # SDL_ARRAYORDER_ARGB
+    Bgr # SDL_ARRAYORDER_BGR
+    Bgra # SDL_ARRAYORDER_BGRA
+    Abgr # SDL_ARRAYORDER_ABGR
+  end
+
+  enum PackedLayout
+    None # SDL_PACKEDLAYOUT_NONE
+    P332 # SDL_PACKEDLAYOUT_332
+    P4444 # SDL_PACKEDLAYOUT_4444
+    P1555 # SDL_PACKEDLAYOUT_1555
+    P5551 # SDL_PACKEDLAYOUT_5551
+    P565 # SDL_PACKEDLAYOUT_565
+    P8888 # SDL_PACKEDLAYOUT_8888
+    P2101010 # SDL_PACKEDLAYOUT_2101010
+    P1010102 # SDL_PACKEDLAYOUT_1010102
+  end
+
+  enum PixelFormat : UInt32
+    Unknown = 0 # SDL_PIXELFORMAT_UNKNOWN
+    Index1lsb = 0x11100100u32 # SDL_PIXELFORMAT_INDEX1LSB
+    Index1msb = 0x11200100u32 # SDL_PIXELFORMAT_INDEX1MSB
+    Index2lsb = 0x1c100200u32 # SDL_PIXELFORMAT_INDEX2LSB
+    Index2msb = 0x1c200200u32 # SDL_PIXELFORMAT_INDEX2MSB
+    Index4lsb = 0x12100400u32 # SDL_PIXELFORMAT_INDEX4LSB
+    Index4msb = 0x12200400u32 # SDL_PIXELFORMAT_INDEX4MSB
+    Index8 = 0x13000801u32 # SDL_PIXELFORMAT_INDEX8
+    Rgb332 = 0x14110801u32 # SDL_PIXELFORMAT_RGB332
+    Xrgb4444 = 0x15120c02u32 # SDL_PIXELFORMAT_XRGB4444
+    Xbgr4444 = 0x15520c02u32 # SDL_PIXELFORMAT_XBGR4444
+    Xrgb1555 = 0x15130f02u32 # SDL_PIXELFORMAT_XRGB1555
+    Xbgr1555 = 0x15530f02u32 # SDL_PIXELFORMAT_XBGR1555
+    Argb4444 = 0x15321002u32 # SDL_PIXELFORMAT_ARGB4444
+    Rgba4444 = 0x15421002u32 # SDL_PIXELFORMAT_RGBA4444
+    Abgr4444 = 0x15721002u32 # SDL_PIXELFORMAT_ABGR4444
+    Bgra4444 = 0x15821002u32 # SDL_PIXELFORMAT_BGRA4444
+    Argb1555 = 0x15331002u32 # SDL_PIXELFORMAT_ARGB1555
+    Rgba5551 = 0x15441002u32 # SDL_PIXELFORMAT_RGBA5551
+    Abgr1555 = 0x15731002u32 # SDL_PIXELFORMAT_ABGR1555
+    Bgra5551 = 0x15841002u32 # SDL_PIXELFORMAT_BGRA5551
+    Rgb565 = 0x15151002u32 # SDL_PIXELFORMAT_RGB565
+    Bgr565 = 0x15551002u32 # SDL_PIXELFORMAT_BGR565
+    Rgb24 = 0x17101803u32 # SDL_PIXELFORMAT_RGB24
+    Bgr24 = 0x17401803u32 # SDL_PIXELFORMAT_BGR24
+    Xrgb8888 = 0x16161804u32 # SDL_PIXELFORMAT_XRGB8888
+    Rgbx8888 = 0x16261804u32 # SDL_PIXELFORMAT_RGBX8888
+    Xbgr8888 = 0x16561804u32 # SDL_PIXELFORMAT_XBGR8888
+    Bgrx8888 = 0x16661804u32 # SDL_PIXELFORMAT_BGRX8888
+    Argb8888 = 0x16362004u32 # SDL_PIXELFORMAT_ARGB8888
+    Rgba8888 = 0x16462004u32 # SDL_PIXELFORMAT_RGBA8888
+    Abgr8888 = 0x16762004u32 # SDL_PIXELFORMAT_ABGR8888
+    Bgra8888 = 0x16862004u32 # SDL_PIXELFORMAT_BGRA8888
+    Xrgb2101010 = 0x16172004u32 # SDL_PIXELFORMAT_XRGB2101010
+    Xbgr2101010 = 0x16572004u32 # SDL_PIXELFORMAT_XBGR2101010
+    Argb2101010 = 0x16372004u32 # SDL_PIXELFORMAT_ARGB2101010
+    Abgr2101010 = 0x16772004u32 # SDL_PIXELFORMAT_ABGR2101010
+    Rgb48 = 0x18103006u32 # SDL_PIXELFORMAT_RGB48
+    Bgr48 = 0x18403006u32 # SDL_PIXELFORMAT_BGR48
+    Rgba64 = 0x18204008u32 # SDL_PIXELFORMAT_RGBA64
+    Argb64 = 0x18304008u32 # SDL_PIXELFORMAT_ARGB64
+    Bgra64 = 0x18504008u32 # SDL_PIXELFORMAT_BGRA64
+    Abgr64 = 0x18604008u32 # SDL_PIXELFORMAT_ABGR64
+    Rgb48Float = 0x1a103006u32 # SDL_PIXELFORMAT_RGB48_FLOAT
+    Bgr48Float = 0x1a403006u32 # SDL_PIXELFORMAT_BGR48_FLOAT
+    Rgba64Float = 0x1a204008u32 # SDL_PIXELFORMAT_RGBA64_FLOAT
+    Argb64Float = 0x1a304008u32 # SDL_PIXELFORMAT_ARGB64_FLOAT
+    Bgra64Float = 0x1a504008u32 # SDL_PIXELFORMAT_BGRA64_FLOAT
+    Abgr64Float = 0x1a604008u32 # SDL_PIXELFORMAT_ABGR64_FLOAT
+    Rgb96Float = 0x1b10600cu32 # SDL_PIXELFORMAT_RGB96_FLOAT
+    Bgr96Float = 0x1b40600cu32 # SDL_PIXELFORMAT_BGR96_FLOAT
+    Rgba128Float = 0x1b208010u32 # SDL_PIXELFORMAT_RGBA128_FLOAT
+    Argb128Float = 0x1b308010u32 # SDL_PIXELFORMAT_ARGB128_FLOAT
+    Bgra128Float = 0x1b508010u32 # SDL_PIXELFORMAT_BGRA128_FLOAT
+    Abgr128Float = 0x1b608010u32 # SDL_PIXELFORMAT_ABGR128_FLOAT
+    Yv12 = 0x32315659u32 # SDL_PIXELFORMAT_YV12
+    Iyuv = 0x56555949u32 # SDL_PIXELFORMAT_IYUV
+    Yuy2 = 0x32595559u32 # SDL_PIXELFORMAT_YUY2
+    Uyvy = 0x59565955u32 # SDL_PIXELFORMAT_UYVY
+    Yvyu = 0x55595659u32 # SDL_PIXELFORMAT_YVYU
+    Nv12 = 0x3231564eu32 # SDL_PIXELFORMAT_NV12
+    Nv21 = 0x3132564eu32 # SDL_PIXELFORMAT_NV21
+    P010 = 0x30313050u32 # SDL_PIXELFORMAT_P010
+    ExternalOes = 0x2053454fu32 # SDL_PIXELFORMAT_EXTERNAL_OES
+    Mjpg = 0x47504a4du32 # SDL_PIXELFORMAT_MJPG
+
+    {% if flag?(:big_endian) %} #if SDL_BYTEORDER == SDL_BIG_ENDIAN
+    Rgba32  = Rgba8888 # SDL_PIXELFORMAT_RGBA32
+    Argb32  = Argb8888 # SDL_PIXELFORMAT_ARGB32
+    Bgra32  = Bgra8888 # SDL_PIXELFORMAT_BGRA32
+    Abgr32  = Abgr8888 # SDL_PIXELFORMAT_ABGR32
+    Rgbx32  = Rgbx8888 # SDL_PIXELFORMAT_RGBX32
+    Xrgb32  = Xrgb8888 # SDL_PIXELFORMAT_XRGB32
+    Bgrx32  = Bgrx8888 # SDL_PIXELFORMAT_BGRX32
+    Xbgr32  = Xbgr8888 # SDL_PIXELFORMAT_XBGR32
+    {% else %}
+    Rgba32  = Abgr8888 # SDL_PIXELFORMAT_RGBA32
+    Argb32  = Bgra8888 # SDL_PIXELFORMAT_ARGB32
+    Bgra32  = Argb8888 # SDL_PIXELFORMAT_BGRA32
+    Abgr32  = Rgba8888 # SDL_PIXELFORMAT_ABGR32
+    Rgbx32  = Xbgr8888 # SDL_PIXELFORMAT_RGBX32
+    Xrgb32  = Bgrx8888 # SDL_PIXELFORMAT_XRGB32
+    Bgrx32  = Xrgb8888 # SDL_PIXELFORMAT_BGRX32
+    Xbgr32  = Rgbx8888 # SDL_PIXELFORMAT_XBGR32
+    {% end %}
+  end
+
+  enum ColorType
+    Unknown = 0 # SDL_COLOR_TYPE_UNKNOWN
+    Rgb = 1 # SDL_COLOR_TYPE_RGB
+    Ycbcr = 2 # SDL_COLOR_TYPE_YCBCR
+  end
+
+  enum ColorRange
+    Unknown = 0 # SDL_COLOR_RANGE_UNKNOWN
+    Limited = 1 # SDL_COLOR_RANGE_LIMITED
+    Full = 2 # SDL_COLOR_RANGE_FULL
+  end
+
+  enum ColorPrimaries
+    Unknown = 0 # SDL_COLOR_PRIMARIES_UNKNOWN
+    Bt709 = 1 # SDL_COLOR_PRIMARIES_BT709
+    Unspecified = 2 # SDL_COLOR_PRIMARIES_UNSPECIFIED
+    Bt470m = 4 # SDL_COLOR_PRIMARIES_BT470M
+    Bt470bg = 5 # SDL_COLOR_PRIMARIES_BT470BG
+    Bt601 = 6 # SDL_COLOR_PRIMARIES_BT601
+    Smpte240 = 7 # SDL_COLOR_PRIMARIES_SMPTE240
+    GenericFilm = 8 # SDL_COLOR_PRIMARIES_GENERIC_FILM
+    Bt2020 = 9 # SDL_COLOR_PRIMARIES_BT2020
+    Xyz = 10 # SDL_COLOR_PRIMARIES_XYZ
+    Smpte431 = 11 # SDL_COLOR_PRIMARIES_SMPTE431
+    Smpte432 = 12 # SDL_COLOR_PRIMARIES_SMPTE432
+    Ebu3213 = 22 # SDL_COLOR_PRIMARIES_EBU3213
+    Custom = 31 # SDL_COLOR_PRIMARIES_CUSTOM
+  end
+
+  enum TransferCharacteristics
+    Unknown = 0 # SDL_TRANSFER_CHARACTERISTICS_UNKNOWN
+    Bt709 = 1 # SDL_TRANSFER_CHARACTERISTICS_BT709
+    Unspecified = 2 # SDL_TRANSFER_CHARACTERISTICS_UNSPECIFIED
+    Gamma22 = 4 # SDL_TRANSFER_CHARACTERISTICS_GAMMA22
+    Gamma28 = 5 # SDL_TRANSFER_CHARACTERISTICS_GAMMA28
+    Bt601 = 6 # SDL_TRANSFER_CHARACTERISTICS_BT601
+    Smpte240 = 7 # SDL_TRANSFER_CHARACTERISTICS_SMPTE240
+    Linear = 8 # SDL_TRANSFER_CHARACTERISTICS_LINEAR
+    Log100 = 9 # SDL_TRANSFER_CHARACTERISTICS_LOG100
+    Log100Sqrt10 = 10 # SDL_TRANSFER_CHARACTERISTICS_LOG100_SQRT10
+    Iec61966 = 11 # SDL_TRANSFER_CHARACTERISTICS_IEC61966
+    Bt1361 = 12 # SDL_TRANSFER_CHARACTERISTICS_BT1361
+    Srgb = 13 # SDL_TRANSFER_CHARACTERISTICS_SRGB
+    Bt202010bit = 14 # SDL_TRANSFER_CHARACTERISTICS_BT2020_10BIT
+    Bt202012bit = 15 # SDL_TRANSFER_CHARACTERISTICS_BT2020_12BIT
+    Pq = 16 # SDL_TRANSFER_CHARACTERISTICS_PQ
+    Smpte428 = 17 # SDL_TRANSFER_CHARACTERISTICS_SMPTE428
+    Hlg = 18 # SDL_TRANSFER_CHARACTERISTICS_HLG
+    Custom = 31 # SDL_TRANSFER_CHARACTERISTICS_CUSTOM
+  end
+
+  enum MatrixCoefficients
+    Identity = 0 # SDL_MATRIX_COEFFICIENTS_IDENTITY
+    Bt709 = 1 # SDL_MATRIX_COEFFICIENTS_BT709
+    Unspecified = 2 # SDL_MATRIX_COEFFICIENTS_UNSPECIFIED
+    Fcc = 4 # SDL_MATRIX_COEFFICIENTS_FCC
+    Bt470bg = 5 # SDL_MATRIX_COEFFICIENTS_BT470BG
+    Bt601 = 6 # SDL_MATRIX_COEFFICIENTS_BT601
+    Smpte240 = 7 # SDL_MATRIX_COEFFICIENTS_SMPTE240
+    Ycgco = 8 # SDL_MATRIX_COEFFICIENTS_YCGCO
+    Bt2020Ncl = 9 # SDL_MATRIX_COEFFICIENTS_BT2020_NCL
+    Bt2020Cl = 10 # SDL_MATRIX_COEFFICIENTS_BT2020_CL
+    Smpte2085 = 11 # SDL_MATRIX_COEFFICIENTS_SMPTE2085
+    ChromaDerivedNcl = 12 # SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_NCL
+    ChromaDerivedCl = 13 # SDL_MATRIX_COEFFICIENTS_CHROMA_DERIVED_CL
+    Ictcp = 14 # SDL_MATRIX_COEFFICIENTS_ICTCP
+    Custom = 31 # SDL_MATRIX_COEFFICIENTS_CUSTOM
+  end
+
+  enum ChromaLocation
+    None = 0 # SDL_CHROMA_LOCATION_NONE
+    Left = 1 # SDL_CHROMA_LOCATION_LEFT
+    Center = 2 # SDL_CHROMA_LOCATION_CENTER
+    Topleft = 3 # SDL_CHROMA_LOCATION_TOPLEFT
+  end
+
+  enum Colorspace : UInt32
+    Unknown = 0 # SDL_COLORSPACE_UNKNOWN
+    Srgb = 0x120005a0u32 # SDL_COLORSPACE_SRGB
+    SrgbLinear = 0x12000500u32 # SDL_COLORSPACE_SRGB_LINEAR
+    Hdr10 = 0x12002600u32 # SDL_COLORSPACE_HDR10
+    Jpeg = 0x220004c6u32 # SDL_COLORSPACE_JPEG
+    Bt601Limited = 0x211018c6u32 # SDL_COLORSPACE_BT601_LIMITED
+    Bt601Full = 0x221018c6u32 # SDL_COLORSPACE_BT601_FULL
+    Bt709Limited = 0x21100421u32 # SDL_COLORSPACE_BT709_LIMITED
+    Bt709Full = 0x22100421u32 # SDL_COLORSPACE_BT709_FULL
+    Bt2020Limited = 0x21102609u32 # SDL_COLORSPACE_BT2020_LIMITED
+    Bt2020Full = 0x22102609u32 # SDL_COLORSPACE_BT2020_FULL
+    RgbDefault  = Srgb # SDL_COLORSPACE_RGB_DEFAULT
+    YuvDefault  = Bt601Limited # SDL_COLORSPACE_YUV_DEFAULT
+  end
+
+  struct Color
+    r : UInt8
+    g : UInt8
+    b : UInt8
+    a : UInt8
+  end
+
+  struct FColor
+    r : Float32
+    g : Float32
+    b : Float32
+    a : Float32
+  end
+
+  struct Palette
+    ncolors : Int32
+    colors : Color*
+    version : UInt32
+    refcount : Int32
+  end
+
+  struct PixelFormatDetails
+    format : PixelFormat
+    bits_per_pixel : UInt8
+    bytes_per_pixel : UInt8
+    padding : UInt8
+    rmask : UInt32
+    gmask : UInt32
+    bmask : UInt32
+    amask : UInt32
+    rbits : UInt8
+    gbits : UInt8
+    bbits : UInt8
+    abits : UInt8
+    rshift : UInt8
+    gshift : UInt8
+    bshift : UInt8
+    ashift : UInt8
+  end
+
+  # end extern SDL_DECLSPEC const char * SDLCALL SDL_GetPixelFormatName(SDL_PixelFormat format);
+  fun get_pixel_format_name = SDL_GetPixelFormatName(format : PixelFormat) : Char*
+
+  # extern SDL_DECLSPEC bool SDLCALL SDL_GetMasksForPixelFormat(SDL_PixelFormat format, int *bpp, Uint32 *Rmask, Uint32 *Gmask, Uint32 *Bmask, Uint32 *Amask);
+  fun get_masks_for_pixel_format = SDL_GetMasksForPixelFormat(format : PixelFormat, bpp : Int32*, rmask : UInt32*, gmask : UInt32*, bmask : UInt32*, amask : UInt32*) : Bool
+
+  # extern SDL_DECLSPEC SDL_PixelFormat SDLCALL SDL_GetPixelFormatForMasks(int bpp, Uint32 Rmask, Uint32 Gmask, Uint32 Bmask, Uint32 Amask);
+  fun get_pixel_format_for_masks = SDL_GetPixelFormatForMasks(bpp : Int32, rmask : UInt32, gmask : UInt32, bmask : UInt32, amask : UInt32) : PixelFormat
+
+  # extern SDL_DECLSPEC const SDL_PixelFormatDetails * SDLCALL SDL_GetPixelFormatDetails(SDL_PixelFormat format);
+  fun get_pixel_format_details = SDL_GetPixelFormatDetails(format : PixelFormat) : PixelFormatDetails*
+
+  # extern SDL_DECLSPEC SDL_Palette * SDLCALL SDL_CreatePalette(int ncolors);
+  fun create_palette = SDL_CreatePalette(ncolors : Int32) : Palette*
+
+  # extern SDL_DECLSPEC bool SDLCALL SDL_SetPaletteColors(SDL_Palette *palette, const SDL_Color *colors, int firstcolor, int ncolors);
+  fun set_palette_colors = SDL_SetPaletteColors(palette : Palette*, colors : Color*, firstcolor : Int32, ncolors : Int32) : Bool
+
+  # extern SDL_DECLSPEC void SDLCALL SDL_DestroyPalette(SDL_Palette *palette);
+  fun destroy_palette = SDL_DestroyPalette(palette : Palette*) : Void
+
+  # extern SDL_DECLSPEC Uint32 SDLCALL SDL_MapRGB(const SDL_PixelFormatDetails *format, const SDL_Palette *palette, Uint8 r, Uint8 g, Uint8 b);
+  fun map_rgb = SDL_MapRGB(format : PixelFormatDetails*, palette : Palette*, r : UInt8, g : UInt8, b : UInt8) : UInt32
+
+  # extern SDL_DECLSPEC Uint32 SDLCALL SDL_MapRGBA(const SDL_PixelFormatDetails *format, const SDL_Palette *palette, Uint8 r, Uint8 g, Uint8 b, Uint8 a);
+  fun map_rgba = SDL_MapRGBA(format : PixelFormatDetails*, palette : Palette*, r : UInt8, g : UInt8, b : UInt8, a : UInt8) : UInt32
+
+  # extern SDL_DECLSPEC void SDLCALL SDL_GetRGB(Uint32 pixelvalue, const SDL_PixelFormatDetails *format, const SDL_Palette *palette, Uint8 *r, Uint8 *g, Uint8 *b);
+  fun get_rgb = SDL_GetRGB(pixelvalue : UInt32, format : PixelFormatDetails*, palette : Palette*, r : UInt8*, g : UInt8*, b : UInt8*) : Void
+
+  # extern SDL_DECLSPEC void SDLCALL SDL_GetRGBA(Uint32 pixelvalue, const SDL_PixelFormatDetails *format, const SDL_Palette *palette, Uint8 *r, Uint8 *g, Uint8 *b, Uint8 *a);
+  fun get_rgba = SDL_GetRGBA(pixelvalue : UInt32, format : PixelFormatDetails*, palette : Palette*, r : UInt8*, g : UInt8*, b : UInt8*, a : UInt8*) : Void
+end

@@ -1,0 +1,39 @@
+require "./lib_sdl3"
+
+module Sdl3
+  VERSION = {{ `shards version`.stringify }}
+
+  alias InitFlags = LibSdl3::InitFlags
+
+  class Error < Exception
+  end
+
+  def self.init(flags : LibSdl3::InitFlags)
+    LibSdl3.init(flags).tap do |result|
+      raise_error unless result
+    end
+  end
+
+  def self.raise_error
+    raise Error.new(String.new(LibSdl3.get_error))
+  end
+
+  def self.quit
+    LibSdl3.quit
+  end
+
+  def self.init(flags : LibSdl3::InitFlags, &)
+    init(flags)
+    yield
+    quit
+  end
+end
+
+require "./sdl_object"
+require "./event"
+require "./window"
+require "./renderer"
+require "./surface"
+require "./texture"
+require "./properties"
+require "./camera"
