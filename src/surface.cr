@@ -1,9 +1,6 @@
 module Sdl3
   class Surface < SdlObject(LibSdl3::Surface*)
-    alias PixelFormat = LibSdl3::PixelFormat
     alias Flags = LibSdl3::SurfaceFlags
-    alias ScaleMode = LibSdl3::ScaleMode
-    alias FlipMode = LibSdl3::FlipMode
 
     def initialize(@pointer, @owned = true)
     end

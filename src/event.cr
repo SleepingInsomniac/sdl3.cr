@@ -39,6 +39,14 @@ module Sdl3
       end
 
       delegate window_id, which, scancode, key, mod, raw, down, repeat, to: _event
+
+      def down?
+        _event.down > 0
+      end
+
+      def repeat?
+        _event.repeat > 0
+      end
     end
 
     struct TextEditing < Event

@@ -239,9 +239,9 @@ module Sdl3
       LibSdl3.render_clip_enabled(@pointer)
     end
 
-    def scale=(scale : Tuple(Float32, Float32))
+    def scale=(scale : Tuple(Number, Number))
       x, y = scale
-      LibSdl3.set_render_scale(@pointer, x, y)
+      LibSdl3.set_render_scale(@pointer, x.to_f32, y.to_f32)
     end
 
     def scale
@@ -259,8 +259,8 @@ module Sdl3
       {r, g, b, a}
     end
 
-    def color_scale=(scale : Float32)
-      LibSdl3.set_render_color_scale(@pointer, scale)
+    def color_scale=(scale : Number)
+      LibSdl3.set_render_color_scale(@pointer, scale.to_f32)
     end
 
     def color_scale
@@ -281,11 +281,21 @@ module Sdl3
       LibSdl3.render_texture(@pointer, texture, source_rect, dest_rect)
     end
 
+    def render_surface(surface : Surface, source_rect : LibSdl3::FRect? = nil, dest_rect : LibSdl3::FRect? = nil)
+      pointer = LibSdl3.create_texture_from_surface(self, surface)
+      Sdl3.raise_error unless pointer
+      texture = Texture.new(pointer)
+      render_texture(texture)
+    end
+
     def render_texture_rotated(texture : Texture, source_rect : LibSdl3::FRect? = nil, dest_rect : LibSdl3::FRect? = nil, angle : Float64 = 0.0, center : LibSdl3::FPoint? = nil, flip : FlipMode = FlipMode::None)
       Sdl3.raise_error unless LibSdl3.render_texture_rotated(@pointer, texture, source_rect, dest_rect, angle, center, flip)
     end
 
-    # LibSdl3.render_texture_affine(@pointer, texture : Texture*, srcrect : FRect*, origin : FPoint*, right : FPoint*, down : FPoint*) : Bool
+    def render_texture_affine(texture : Texture, source_rect : LibSdl3::FRect? = nil, dest_rect : LibSdl3::FRect? = nil, angle : Float64 = 0.0, center : LibSdl3::FPoint? = nil, flip : FlipMode = FlipMode::None)
+      Sdl3.raise_error unless LibSdl3.render_texture_affine(@pointer, texture, source_rect, dest_rect, angle, center, flip)
+    end
+
     # LibSdl3.render_texture_tiled(@pointer, texture : Texture*, srcrect : FRect*, scale : Float32, dstrect : FRect*) : Bool
     # LibSdl3.render_texture_9_grid(@pointer, texture : Texture*, srcrect : FRect*, left_width : Float32, right_width : Float32, top_height : Float32, bottom_height : Float32, scale : Float32, dstrect : FRect*) : Bool
     # LibSdl3.render_texture_9_grid_tiled(@pointer, texture : Texture*, srcrect : FRect*, left_width : Float32, right_width : Float32, top_height : Float32, bottom_height : Float32, scale : Float32, dstrect : FRect*, tile_scale : Float32) : Bool
@@ -293,15 +303,30 @@ module Sdl3
     # LibSdl3.render_geometry_raw(@pointer, texture : Texture*, xy : Float32*, xy_stride : Int, color : FColor*, color_stride : Int, uv : Float32*, uv_stride : Int, num_vertices : Int, indices : Void*, num_indices : Int, size_indices : Int) : Bool
     # LibSdl3.set_render_texture_address_mode(@pointer, u_mode : TextureAddressMode, v_mode : TextureAddressMode) : Bool
     # LibSdl3.get_render_texture_address_mode(@pointer, u_mode : TextureAddressMode*, v_mode : TextureAddressMode*) : Bool
-    # LibSdl3.render_read_pixels(@pointer, rect : Rect*) : Surface*
+
+    def read_pixels(rect : LibSdl3::Rect? = nil)
+      Surface.new(LibSdl3.render_read_pixels(@pointer, rect))
+    end
+
     # LibSdl3.get_render_metal_layer(@pointer) : Void*
     # LibSdl3.get_render_metal_command_encoder(@pointer) : Void*
     # LibSdl3.add_vulkan_render_semaphores(@pointer, wait_stage_mask : UInt32, wait_semaphore : Int64, signal_semaphore : Int64) : Bool
     # LibSdl3.set_render_v_sync(@pointer, vsync : Int) : Bool
     # LibSdl3.get_render_v_sync(@pointer, vsync : Int*) : Bool
-    # LibSdl3.render_debug_text(@pointer, x : Float32, y : Float32, str : Char*) : Bool
+
+    def debug_text(x : Float32, y : Float32, string : String)
+      Sdl3.raise_error unless LibSdl3.render_debug_text(@pointer, x, y, string)
+    end
+
     # LibSdl3.render_debug_text_format(@pointer, x : Float32, y : Float32, fmt : Char*, ...) : Bool
-    # LibSdl3.set_default_texture_scale_mode(@pointer, scale_mode : ScaleMode) : Bool
-    # LibSdl3.get_default_texture_scale_mode(@pointer, scale_mode : ScaleMode*) : Bool
+
+    def default_texture_scale_mode=(scale_mode : ScaleMode)
+      Sdl3.raise_error unless LibSdl3.set_default_texture_scale_mode(@pointer, scale_mode)
+    end
+
+    def default_texture_scale_mode
+      Sdl3.raise_error unless LibSdl3.get_default_texture_scale_mode(@pointer, out scale_mode)
+      scale_mode
+    end
   end
 end

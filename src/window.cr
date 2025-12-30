@@ -22,5 +22,63 @@ module Sdl3
     def create_renderer(name : String? = nil)
       @renderer ||= Renderer.new(self, name)
     end
+
+    def title
+      String.new(LibSdl3.get_window_title(self))
+    end
+
+    def title=(title : String)
+      LibSdl3.set_window_title(self, title)
+    end
+
+    def position
+      LibSdl3.get_window_position(self, out x, out y)
+      {x, y}
+    end
+
+    def position=(position : Tuple(Int32, Int32))
+      LibSdl3.set_window_position(self, position[0], position[1])
+    end
+
+    def size
+      LibSdl3.get_window_size(self, out x, out y)
+      {x, y}
+    end
+
+    def size=(size : Tuple(Int32, Int32))
+      LibSdl3.set_window_size(self, size[0], size[1])
+    end
+
+    def width
+      size[0]
+    end
+
+    def height
+      size[1]
+    end
+
+    def raise
+      LibSdl3.raise_window(self)
+    end
+
+    def show
+      LibSdl3.show_window(self)
+    end
+
+    def hide
+      LibSdl3.hide_window(self)
+    end
+
+    def keyboard_grabbed?
+      LibSdl3.get_window_keyboard_grab(self)
+    end
+
+    def keyboard_grabbed=(value : Bool)
+      LibSdl3.set_window_keyboard_grab(self, value)
+    end
+
+    def surface
+      LibSdl3.get_window_surface(self)
+    end
   end
 end

@@ -3,7 +3,12 @@ require "./lib_sdl3"
 module Sdl3
   VERSION = {{ `shards version`.stringify }}
 
-  alias InitFlags = LibSdl3::InitFlags
+  alias InitFlags   = LibSdl3::InitFlags
+  alias PixelFormat = LibSdl3::PixelFormat
+  alias ScaleMode   = LibSdl3::ScaleMode
+  alias FlipMode    = LibSdl3::FlipMode
+  alias Keycode     = LibSdl3::Keycode
+  alias Keymod      = LibSdl3::Keymod
 
   class Error < Exception
   end
