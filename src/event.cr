@@ -95,6 +95,10 @@ module Sdl3
       end
 
       delegate window_id, which, button, down, clicks, x, y, to: _event
+
+      def down?
+        _event.down > 0
+      end
     end
 
     struct MouseWheel < Event
