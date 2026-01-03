@@ -34,7 +34,7 @@ module Sdl3
 
     def self.load_wav(path : String)
       Sdl3.raise_error unless LibSdl3.loadwav(path, out spec, out audio_buf_ptr, out audio_len)
-      Sdl3::Data(UInt8).new(audio_buf_ptr, audio_len)
+      {Sdl3::Data(UInt8).new(audio_buf_ptr, audio_len), spec}
     end
 
     struct Device
