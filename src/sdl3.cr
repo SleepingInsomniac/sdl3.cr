@@ -36,6 +36,7 @@ module Sdl3
 end
 
 require "./sdl_object"
+require "./data"
 require "./event"
 require "./window"
 require "./renderer"
@@ -43,3 +44,4 @@ require "./surface"
 require "./texture"
 require "./properties"
 require "./camera"
+require "./audio"

@@ -66,7 +66,7 @@ module Sdl3
     end
 
     def clear(r, g, b, a)
-      LibSdl3.clear_surface(self, r : Float32, g : Float32, b : Float32, a : Float32)
+      LibSdl3.clear_surface(self, r, g, b, a)
     end
 
     def blit(source_rect : Rect?, dest : Surface, dest_rect : Rect?)

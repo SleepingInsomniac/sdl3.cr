@@ -27,6 +27,12 @@ lib LibSdl3
 
   alias AudioDeviceID = UInt32 # typedef Uint32 SDL_AudioDeviceID;
 
+  #define SDL_AUDIO_DEVICE_DEFAULT_PLAYBACK ((SDL_AudioDeviceID) 0xFFFFFFFFu)
+  AUDIO_DEVICE_DEFAULT_PLAYBACK = 0xFFFFFFFFu32
+
+  #define SDL_AUDIO_DEVICE_DEFAULT_RECORDING ((SDL_AudioDeviceID) 0xFFFFFFFEu)
+  AUDIO_DEVICE_DEFAULT_RECORDING = 0xFFFFFFFEu32
+
   struct AudioSpec
     format : AudioFormat
     channels : Int
@@ -148,7 +154,7 @@ lib LibSdl3
   # extern SDL_DECLSPEC bool SDLCALL SDL_LoadWAV_IO(SDL_IOStream *src, bool closeio, SDL_AudioSpec *spec, Uint8 **audio_buf, Uint32 *audio_len);
   fun loadwav_io = SDL_LoadWAV_IO(src : IOStream*, closeio : Bool, spec : AudioSpec*, audio_buf : UInt8*, audio_len : UInt32*) : Bool
   # extern SDL_DECLSPEC bool SDLCALL SDL_LoadWAV(const char *path, SDL_AudioSpec *spec, Uint8 **audio_buf, Uint32 *audio_len);
-  fun loadwav = SDL_LoadWAV(path : Char*, spec : AudioSpec*, audio_buf : UInt8*, audio_len : UInt32*) : Bool
+  fun loadwav = SDL_LoadWAV(path : Char*, spec : AudioSpec*, audio_buf : UInt8**, audio_len : UInt32*) : Bool
   # extern SDL_DECLSPEC bool SDLCALL SDL_MixAudio(Uint8 *dst, const Uint8 *src, SDL_AudioFormat format, Uint32 len, float volume);
   fun mix_audio = SDL_MixAudio(dst : UInt8*, src : UInt8*, format : AudioFormat, len : UInt32, volume : Float32) : Bool
   # extern SDL_DECLSPEC bool SDLCALL SDL_ConvertAudioSamples(const SDL_AudioSpec *src_spec, const Uint8 *src_data, int src_len, const SDL_AudioSpec *dst_spec, Uint8 **dst_data, int *dst_len);

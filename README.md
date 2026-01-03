@@ -6,6 +6,8 @@
 
 ```bash
 brew install sdl3
+brew install sdl3_image # optional
+brew install sdl3_ttf # optional
 ```
 
 2. Add the dependency to your `shard.yml`:
