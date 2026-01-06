@@ -51,7 +51,7 @@ lib LibSdl3
   # extern SDL_DECLSPEC bool SDLCALL SDL_ClearProperty(SDL_PropertiesID props, const char *name);
   fun clear_property = SDL_ClearProperty(props : PropertiesID, name : Char*) : Bool
   # typedef void (SDLCALL *SDL_EnumeratePropertiesCallback)(void *userdata, SDL_PropertiesID props, const char *name);
-  alias EnumeratePropertiesCallback = (Void*, PropertiesID, Char*) -> Void*
+  alias EnumeratePropertiesCallback = (Void*, PropertiesID, Char*) -> Void
   # extern SDL_DECLSPEC bool SDLCALL SDL_EnumerateProperties(SDL_PropertiesID props, SDL_EnumeratePropertiesCallback callback, void *userdata);
   fun enumerate_properties = SDL_EnumerateProperties(props : PropertiesID, callback : EnumeratePropertiesCallback, userdata : Void*) : Bool
   # extern SDL_DECLSPEC void SDLCALL SDL_DestroyProperties(SDL_PropertiesID props);

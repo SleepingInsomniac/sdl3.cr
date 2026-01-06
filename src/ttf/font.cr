@@ -1,12 +1,43 @@
 module Sdl3
   module TTF
     class Font < SdlObject(LibSdl3TTF::Font*)
+      @[Flags]
+      enum Style : LibSdl3TTF::FontStyleFlags
+        Normal        = LibSdl3TTF::STYLE_NORMAL
+        Bold          = LibSdl3TTF::STYLE_BOLD
+        Italic        = LibSdl3TTF::STYLE_ITALIC
+        Underline     = LibSdl3TTF::STYLE_UNDERLINE
+        Strikethrough = LibSdl3TTF::STYLE_STRIKETHROUGH
+      end
+
       def self.open(path : String, ptsize : Float32)
-        new(LibSdl3TTF.open_font(path, ptsize))
+        ptr = LibSdl3TTF.open_font(path, ptsize)
+        Sdl3.raise_error if ptr.null?
+        new(ptr)
       end
 
       def sdl_finalize
         LibSdl3TTF.close_font(self)
+      end
+
+      def properties
+        Properties.new(LibSdl3TTF.get_font_properties(self))
+      end
+
+      def style=(font_style : Style)
+        LibSdl3TTF.set_font_style(self, font_style.value)
+      end
+
+      def style
+        Style.new(LibSdl3TTF.get_font_style(self))
+      end
+
+      def outline=(thickness : Int32)
+        LibSdl3TTF.set_font_outline(self, thickness)
+      end
+
+      def outline
+        LibSdl3TTF.get_font_outline(self)
       end
 
       def render_text_solid(text : String, fg : Color)

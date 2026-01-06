@@ -12,10 +12,12 @@ Sdl3.init(Sdl3::InitFlags::Video) do
   renderer.logical_presentation = {WIDTH, HEIGHT, LibSdl3::RendererLogicalPresentation::Letterbox}
   renderer.draw_color = { 50u8, 50u8, 100u8, 255u8 }
 
-  font = Sdl3::TTF::Font.open("/System/Library/Fonts/NewYorkItalic.ttf", 72)
-  # font = Sdl3::TTF::Font.open("/System/Library/Fonts/Palatino.ttc", 72)
+  # font = Sdl3::TTF::Font.open("/System/Library/Fonts/NewYorkItalic.ttf", 72)
+  font = Sdl3::TTF::Font.open("/System/Library/Fonts/Palatino.ttc", 72)
   fg = Sdl3::Color.new(r: 255, g: 255, b: 255, a: 255)
   bg = Sdl3::Color.new(r: 0, g: 0, b: 0, a: 255)
+
+  font.style = Sdl3::TTF::Font::Style::Underline
 
   lcd     = font.render_text_lcd("Hello World!", fg, bg)
   solid   = font.render_text_solid("Hello World!", fg)

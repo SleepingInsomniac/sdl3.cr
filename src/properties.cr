@@ -1,5 +1,8 @@
 module Sdl3
-  class Properties
+  struct Properties
+    include Enumerable(String)
+
+    alias ID = LibSdl3::PropertiesID
     alias Type = LibSdl3::PropertyType
 
     def self.global
@@ -19,7 +22,7 @@ module Sdl3
     def initialize(@id)
     end
 
-    def finalize
+    def destroy
       LibSdl3.destroy_properties(@id)
     end
 
@@ -44,12 +47,12 @@ module Sdl3
     end
 
     def [](name)
-      case String.new(type(name))
+      case type(name)
       when Type::Pointer then LibSdl3.get_pointer_property(@id, name)
       when Type::String  then String.new(LibSdl3.get_string_property(@id, name))
       when Type::Number  then LibSdl3.get_number_property(@id, name)
       when Type::Float   then LibSdl3.get_float_property(@id, name)
-      when Type::Boolean then LibSdl3.get_boolean_property(@id, name)
+      when Type::Boolean then LibSdl3.get_boolean_property(@id, name) > 0 ? true : false
       end
     end
 
@@ -62,6 +65,16 @@ module Sdl3
       else
         LibSdl3.set_pointer_property(@id, name, value)
       end
+    end
+
+    def each(&block : String ->)
+      box = Box.box(block)
+      callback = ->(user_data : Void*, id : ID, name : UInt8*) do
+        user_callback = Box(typeof(block)).unbox(user_data)
+        user_callback.call(String.new(name))
+      end
+
+      LibSdl3.enumerate_properties(@id, callback, box)
     end
   end
 end

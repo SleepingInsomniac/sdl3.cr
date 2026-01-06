@@ -297,8 +297,9 @@ module Sdl3
     # LibSdl3.set_render_texture_address_mode(@pointer, u_mode : TextureAddressMode, v_mode : TextureAddressMode) : Bool
     # LibSdl3.get_render_texture_address_mode(@pointer, u_mode : TextureAddressMode*, v_mode : TextureAddressMode*) : Bool
 
-    def read_pixels(rect : Rect*? = nil)
-      Surface.new(LibSdl3.render_read_pixels(@pointer, rect))
+    def read_pixels(rect : Rect? = nil)
+      r = rect.try { |r| pointerof(r) } || Pointer(Rect).null
+      Surface.new(LibSdl3.render_read_pixels(@pointer, r))
     end
 
     # LibSdl3.get_render_metal_layer(@pointer) : Void*
