@@ -11,7 +11,9 @@ lib LibSdl3
 
   struct Rect
     x : Int
+    y : Int
     w : Int
+    h : Int
   end
 
   struct FRect
