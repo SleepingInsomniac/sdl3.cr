@@ -9,7 +9,16 @@ module Sdl3
       end
     end
 
-    struct Display < Event
+    abstract struct Display < Event
+      struct Orientation < Display; end
+      struct Added < Display; end
+      struct Removed < Display; end
+      struct Moved < Display; end
+      struct DesktopModeChanged < Display; end
+      struct CurrentModeChanged < Display; end
+      struct ContentScaleChanged < Display; end
+      struct UsableBoundsChanged < Display; end
+
       def _event
         @event.display
       end
@@ -17,7 +26,33 @@ module Sdl3
       delegate display_id, data1, data2, to: _event
     end
 
-    struct Window < Event
+    abstract struct Window < Event
+      struct Shown < Window; end
+      struct Hidden < Window; end
+      struct Exposed < Window; end
+      struct Moved < Window; end
+      struct Resized < Window; end
+      struct PixelSizeChanged < Window; end
+      struct MetalViewResized < Window; end
+      struct Minimized < Window; end
+      struct Maximized < Window; end
+      struct Restored < Window; end
+      struct MouseEnter < Window; end
+      struct MouseLeave < Window; end
+      struct FocusGained < Window; end
+      struct FocusLost < Window; end
+      struct CloseRequested < Window; end
+      struct HitTest < Window; end
+      struct IccprofChanged < Window; end
+      struct DisplayChanged < Window; end
+      struct DisplayScaleChanged < Window; end
+      struct SafeAreaChanged < Window; end
+      struct Occluded < Window; end
+      struct EnterFullscreen < Window; end
+      struct LeaveFullscreen < Window; end
+      struct Destroyed < Window; end
+      struct HdrStateChanged < Window; end
+
       def _event
         @event.window
       end
@@ -317,10 +352,44 @@ module Sdl3
 
     def self.from(event : LibSdl3::Event)
       case event.type
-      when Sdl3::EventType::DisplayFirst..Sdl3::EventType::DisplayLast
-        Display.new(event)
-      when Sdl3::EventType::WindowFirst..Sdl3::EventType::WindowLast
-        Window.new(event)
+
+      # Display events
+      when .display_orientation?           then Display::Orientation.new(event)
+      when .display_added?                 then Display::Added.new(event)
+      when .display_removed?               then Display::Removed.new(event)
+      when .display_moved?                 then Display::Moved.new(event)
+      when .display_desktop_mode_changed?  then Display::DesktopModeChanged.new(event)
+      when .display_current_mode_changed?  then Display::CurrentModeChanged.new(event)
+      when .display_content_scale_changed? then Display::ContentScaleChanged.new(event)
+      when .display_usable_bounds_changed? then Display::UsableBoundsChanged.new(event)
+
+      # Window events
+      when .window_shown?                 then Window::Shown.new(event)
+      when .window_hidden?                then Window::Hidden.new(event)
+      when .window_exposed?               then Window::Exposed.new(event)
+      when .window_moved?                 then Window::Moved.new(event)
+      when .window_resized?               then Window::Resized.new(event)
+      when .window_pixel_size_changed?    then Window::PixelSizeChanged.new(event)
+      when .window_metal_view_resized?    then Window::MetalViewResized.new(event)
+      when .window_minimized?             then Window::Minimized.new(event)
+      when .window_maximized?             then Window::Maximized.new(event)
+      when .window_restored?              then Window::Restored.new(event)
+      when .window_mouse_enter?           then Window::MouseEnter.new(event)
+      when .window_mouse_leave?           then Window::MouseLeave.new(event)
+      when .window_focus_gained?          then Window::FocusGained.new(event)
+      when .window_focus_lost?            then Window::FocusLost.new(event)
+      when .window_close_requested?       then Window::CloseRequested.new(event)
+      when .window_hit_test?              then Window::HitTest.new(event)
+      when .window_iccprof_changed?       then Window::IccprofChanged.new(event)
+      when .window_display_changed?       then Window::DisplayChanged.new(event)
+      when .window_display_scale_changed? then Window::DisplayScaleChanged.new(event)
+      when .window_safe_area_changed?     then Window::SafeAreaChanged.new(event)
+      when .window_occluded?              then Window::Occluded.new(event)
+      when .window_enter_fullscreen?      then Window::EnterFullscreen.new(event)
+      when .window_leave_fullscreen?      then Window::LeaveFullscreen.new(event)
+      when .window_destroyed?             then Window::Destroyed.new(event)
+      when .window_hdr_state_changed?     then Window::HdrStateChanged.new(event)
+
       when .key_up?, .key_down?
         Keyboard.new(event)
       when .text_editing?
