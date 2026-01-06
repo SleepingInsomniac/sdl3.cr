@@ -10,6 +10,10 @@ module Sdl3
   alias Scancode    = LibSdl3::Scancode
   alias Keycode     = LibSdl3::Keycode
   alias Keymod      = LibSdl3::Keymod
+  alias Point       = LibSdl3::Point
+  alias FPoint      = LibSdl3::FPoint
+  alias Rect        = LibSdl3::Rect
+  alias FRect       = LibSdl3::FRect
 
   class Error < Exception
   end
