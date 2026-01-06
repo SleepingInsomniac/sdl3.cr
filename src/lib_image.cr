@@ -10,7 +10,7 @@ lib LibSdl3Image
   alias IOStream = LibSdl3::IOStream
 
   # extern SDL_DECLSPEC int SDLCALL IMG_Version(void);
-  fun version = IMG_Version : Int
+  fun img_version = IMG_Version : Int
 
   # extern SDL_DECLSPEC SDL_Surface * SDLCALL IMG_Load(const char *file);
   fun load = IMG_Load(file : Char*) : Surface*

@@ -66,10 +66,6 @@ module Sdl3
       LibSdl3.set_render_draw_color(@pointer, red, green, blue, alpha)
     end
 
-    def create_texture(surface : Surface)
-      Texture.new(LibSdl3.create_texture_from_surface(@pointer, surface))
-    end
-
     def render_point(x : Float32, y : Float32)
       LibSdl3.render_point(@pointer, x, y)
     end
@@ -145,39 +141,39 @@ module Sdl3
     end
 
     def create_texture(format : LibSdl3::PixelFormat, access : Texture::Access, width : Int32, height : Int32)
-      @pointer = LibSdl3.create_texture(@pointer, format, access, width, height)
-      Sdl3.raise_error unless @pointer
+      pointer = LibSdl3.create_texture(self, format, access, width, height)
+      Sdl3.raise_error unless pointer
       Texture.new(pointer)
     end
 
     def create_texture(surface : Surface)
-      @pointer = LibSdl3.create_texture_from_surface(@pointer, surface)
-      Sdl3.raise_error unless @pointer
+      pointer = LibSdl3.create_texture_from_surface(self, surface)
+      Sdl3.raise_error unless pointer
       Texture.new(pointer)
     end
 
     def create_texture(properties : Properties)
-      @pointer = LibSdl3.create_texture_with_properties(@pointer, properties)
-      Sdl3.raise_error unless @pointer
-      Texture.new(@pointer)
+      pointer = LibSdl3.create_texture_with_properties(self, properties)
+      Sdl3.raise_error unless pointer
+      Texture.new(pointer)
     end
 
     def target=(texture : Texture)
-      LibSdl3.set_render_target(@pointer, texture)
+      LibSdl3.set_render_target(self, texture)
     end
 
     def target
-      pointer = LibSdl3.get_render_target(@pointer)
+      pointer = LibSdl3.get_render_target(self)
       Sdl3.raise_error unless pointer
       Texture.new(pointer)
     end
 
     def flush
-      LibSdl3.flush_renderer(@pointer)
+      LibSdl3.flush_renderer(self)
     end
 
     def logical_presentation_rect?
-      result = LibSdl3.get_render_logical_presentation_rect(@pointer, out rect)
+      result = LibSdl3.get_render_logical_presentation_rect(self, out rect)
       if result
         rect
       else
@@ -186,7 +182,7 @@ module Sdl3
     end
 
     def coordinates_from_window(window_x : Float32, window_y : Float32)
-      result = LibSdl3.render_coordinates_from_window(@pointer, window_x, window_y, out x, out y)
+      result = LibSdl3.render_coordinates_from_window(self, window_x, window_y, out x, out y)
       {x, y}
     end
 
@@ -269,14 +265,7 @@ module Sdl3
     end
 
     def render_texture(texture : Texture, source_rect : LibSdl3::FRect? = nil, dest_rect : LibSdl3::FRect? = nil)
-      LibSdl3.render_texture(@pointer, texture, source_rect, dest_rect)
-    end
-
-    def render_surface(surface : Surface, source_rect : LibSdl3::FRect? = nil, dest_rect : LibSdl3::FRect? = nil)
-      pointer = LibSdl3.create_texture_from_surface(self, surface)
-      Sdl3.raise_error unless pointer
-      texture = Texture.new(pointer)
-      render_texture(texture)
+      LibSdl3.render_texture(@pointer, texture, pointerof(source_rect), pointerof(dest_rect))
     end
 
     def render_texture_rotated(texture : Texture, source_rect : LibSdl3::FRect? = nil, dest_rect : LibSdl3::FRect? = nil, angle : Float64 = 0.0, center : LibSdl3::FPoint? = nil, flip : FlipMode = FlipMode::None)

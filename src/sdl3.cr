@@ -1,7 +1,7 @@
 require "./lib_sdl3"
 
 module Sdl3
-  VERSION = {{ `shards version`.stringify }}
+  VERSION = {{ `shards version`.stringify }} # Bindings version
 
   alias InitFlags   = LibSdl3::InitFlags
   alias PixelFormat = LibSdl3::PixelFormat
@@ -14,6 +14,7 @@ module Sdl3
   alias FPoint      = LibSdl3::FPoint
   alias Rect        = LibSdl3::Rect
   alias FRect       = LibSdl3::FRect
+  alias Color       = LibSdl3::Color
 
   class Error < Exception
   end
