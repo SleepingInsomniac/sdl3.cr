@@ -4,6 +4,17 @@ module Sdl3
     alias DeviceID = LibSdl3::AudioDeviceID
     alias Spec = LibSdl3::AudioSpec
 
+    def self.bytes_per_sample(format : Format)
+      case format
+      when Format::U8, Format::S8 then 1
+      when Format::S16le, Format::S16be then 2
+      when Format::S32le, Format::S32be then 4
+      when Format::F32le, Format::F32be then 4
+      else
+        raise "Can't infer size from #{format}"
+      end
+    end
+
     def self.num_drivers
       LibSdl3.get_num_audio_drivers
     end

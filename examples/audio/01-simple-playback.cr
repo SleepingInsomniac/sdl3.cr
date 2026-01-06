@@ -7,10 +7,11 @@ Sdl3.init(Sdl3::InitFlags::Video | Sdl3::InitFlags::Audio) do
   renderer = window.create_renderer
   renderer.logical_presentation = {640, 480, LibSdl3::RendererLogicalPresentation::Letterbox}
 
-  spec = Sdl3::Audio::Spec.new
-  spec.channels = 1
-  spec.format = Sdl3::Audio::Format::F32
-  spec.freq = 8000
+  spec = Sdl3::Audio::Spec.new(
+    channels: 1,
+    format: Sdl3::Audio::Format::F32,
+    freq: 8000
+  )
 
   stream = Sdl3::Audio::Stream.open(Sdl3::Audio::Device.default_playback, spec)
   stream.resume
@@ -21,7 +22,7 @@ Sdl3.init(Sdl3::InitFlags::Video | Sdl3::InitFlags::Audio) do
       break
     end
 
-    minimum_audio = (8000 * sizeof(Float32)) // 2 # 8000 float samples per second. Half of that.
+    minimum_audio = (8000 * Sdl3::Audio.bytes_per_sample(spec.format)) // 2 # 8000 float samples per second. Half of that.
     if stream.queued < minimum_audio
       freq = 440
       samples = StaticArray(Float32, 512).new do |i|
