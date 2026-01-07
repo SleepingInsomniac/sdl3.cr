@@ -22,8 +22,15 @@ module Sdl3
       Properties.new(LibSdl3.get_surface_properties(self))
     end
 
-    # fun set_surface_colorspace = SDL_SetSurfaceColorspace(surface : Surface*, colorspace : Colorspace) : Bool
-    # fun get_surface_colorspace = SDL_GetSurfaceColorspace(surface : Surface*) : Colorspace
+    # https://wiki.libsdl.org/SDL3/SDL_SetSurfaceColorspace
+    def colorspace=(space : Colorspace)
+      Sdl3.raise_error unless LibSdl3.set_surface_colorspace(self, space)
+    end
+
+    # https://wiki.libsdl.org/SDL3/SDL_GetSurfaceColorspace
+    def colorspace
+      LibSdl3.get_surface_colorspace(self)
+    end
 
     def lock
       LibSdl3.lock_surface(self)
@@ -69,8 +76,11 @@ module Sdl3
       LibSdl3.clear_surface(self, r, g, b, a)
     end
 
-    def blit(source_rect : Rect?, dest : Surface, dest_rect : Rect?)
-      LibSdl3.blit_surface(self, pointerof(source_rect), dest, pointerof(dest_rect))
+    # https://wiki.libsdl.org/SDL3/SDL_BlitSurface
+    def blit(dest : Surface, source_rect : Rect? = nil, dest_rect : Rect? = nil)
+      sr = source_rect.try { |r| pointerof(r) } || Pointer(Rect).null
+      dr = dest_rect.try { |r| pointerof(r) } || Pointer(Rect).null
+      LibSdl3.blit_surface(self, sr, dest, dr)
     end
 
     def convert(format : PixelFormat)

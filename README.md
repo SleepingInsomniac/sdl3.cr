@@ -26,6 +26,8 @@ dependencies:
 require "sdl3"
 ```
 
+Check out the [examples](./examples) which mirror the examples from https://github.com/libsdl-org/SDL/tree/main/examples. Feel free to open a pull request with any that are not yet implemented.
+
 ## Contributing
 
 1. Fork it (<https://github.com/sleepinginsomniac/sdl3.cr/fork>)
