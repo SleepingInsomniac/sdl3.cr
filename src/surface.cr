@@ -62,7 +62,7 @@ module Sdl3
 
     def pixels
       pix_ptr = @pointer.value.pixels.as(Pointer(UInt8))
-      Slice(UInt8).new(pix_ptr, width * pitch * height)
+      Slice(UInt8).new(pix_ptr, height * pitch)
     end
 
     def clear(r, g, b, a)
