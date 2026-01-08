@@ -144,7 +144,15 @@ module Sdl3
         Sdl3.raise_error unless LibSdl3.set_audio_stream_format(self, nil, spec)
       end
 
-      def put_data(buf : Slice | Data)
+      def put_data(buf : StaticArray)
+        Sdl3.raise_error unless LibSdl3.put_audio_stream_data(self, buf, sizeof(typeof(buf)))
+      end
+
+      def put_data(buf : Slice)
+        Sdl3.raise_error unless LibSdl3.put_audio_stream_data(self, buf, buf.bytesize)
+      end
+
+      def put_data(buf : Data)
         Sdl3.raise_error unless LibSdl3.put_audio_stream_data(self, buf, buf.bytesize)
       end
 

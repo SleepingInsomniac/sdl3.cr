@@ -5,7 +5,7 @@ module Sdl3
     @ptr : UInt8*
     getter slice : Slice(T)
 
-    def initialize(@ptr, size : Int)
+    def initialize(@ptr, size : Int, @owned = true)
       slice_size = size // sizeof(T)
       @slice = Slice(T).new(@ptr.as(T*), slice_size)
     end
@@ -15,6 +15,8 @@ module Sdl3
     end
 
     def finalize
+      return unless @owned
+      return if @ptr.null?
       LibSdl3.free(@ptr)
     end
   end

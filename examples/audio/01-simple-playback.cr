@@ -32,7 +32,7 @@ Sdl3.init(Sdl3::InitFlags::Video | Sdl3::InitFlags::Audio) do
       end
 
       current_sine_sample %= 8000
-      stream.put_data(pointerof(samples), sizeof(typeof(samples)))
+      stream.put_data(samples)
     end
 
     renderer.clear
