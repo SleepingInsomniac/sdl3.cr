@@ -1,4 +1,4 @@
-@[Link("sdl3_image")]
+@[Link("sdl3-image")]
 lib LibSdl3Image
   alias Bool = LibC::Char
   alias Char = LibC::Char
