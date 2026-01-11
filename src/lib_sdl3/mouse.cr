@@ -4,47 +4,46 @@ lib LibSdl3
   type Cursor = Void
 
   enum SystemCursor
-    SystemCursorDefault # SDL_SYSTEM_CURSOR_DEFAULT
-    SystemCursorText # SDL_SYSTEM_CURSOR_TEXT
-    SystemCursorWait # SDL_SYSTEM_CURSOR_WAIT
-    SystemCursorCrosshair # SDL_SYSTEM_CURSOR_CROSSHAIR
-    SystemCursorProgress # SDL_SYSTEM_CURSOR_PROGRESS
-    SystemCursorNwseResize # SDL_SYSTEM_CURSOR_NWSE_RESIZE
-    SystemCursorNeswResize # SDL_SYSTEM_CURSOR_NESW_RESIZE
-    SystemCursorEwResize # SDL_SYSTEM_CURSOR_EW_RESIZE
-    SystemCursorNsResize # SDL_SYSTEM_CURSOR_NS_RESIZE
-    SystemCursorMove # SDL_SYSTEM_CURSOR_MOVE
-    SystemCursorNotAllowed # SDL_SYSTEM_CURSOR_NOT_ALLOWED
-    SystemCursorPointer # SDL_SYSTEM_CURSOR_POINTER
-    SystemCursorNwResize # SDL_SYSTEM_CURSOR_NW_RESIZE
-    SystemCursorNResize # SDL_SYSTEM_CURSOR_N_RESIZE
-    SystemCursorNeResize # SDL_SYSTEM_CURSOR_NE_RESIZE
-    SystemCursorEResize # SDL_SYSTEM_CURSOR_E_RESIZE
-    SystemCursorSeResize # SDL_SYSTEM_CURSOR_SE_RESIZE
-    SystemCursorSResize # SDL_SYSTEM_CURSOR_S_RESIZE
-    SystemCursorSwResize # SDL_SYSTEM_CURSOR_SW_RESIZE
-    SystemCursorWResize # SDL_SYSTEM_CURSOR_W_RESIZE
-    SystemCursorCoun # SDL_SYSTEM_CURSOR_COUN
+    Default # SDL_SYSTEM_CURSOR_DEFAULT
+    Text # SDL_SYSTEM_CURSOR_TEXT
+    Wait # SDL_SYSTEM_CURSOR_WAIT
+    Crosshair # SDL_SYSTEM_CURSOR_CROSSHAIR
+    Progress # SDL_SYSTEM_CURSOR_PROGRESS
+    NwseResize # SDL_SYSTEM_CURSOR_NWSE_RESIZE
+    NeswResize # SDL_SYSTEM_CURSOR_NESW_RESIZE
+    EwResize # SDL_SYSTEM_CURSOR_EW_RESIZE
+    NsResize # SDL_SYSTEM_CURSOR_NS_RESIZE
+    Move # SDL_SYSTEM_CURSOR_MOVE
+    NotAllowed # SDL_SYSTEM_CURSOR_NOT_ALLOWED
+    Pointer # SDL_SYSTEM_CURSOR_POINTER
+    NwResize # SDL_SYSTEM_CURSOR_NW_RESIZE
+    NResize # SDL_SYSTEM_CURSOR_N_RESIZE
+    NeResize # SDL_SYSTEM_CURSOR_NE_RESIZE
+    EResize # SDL_SYSTEM_CURSOR_E_RESIZE
+    SeResize # SDL_SYSTEM_CURSOR_SE_RESIZE
+    SResize # SDL_SYSTEM_CURSOR_S_RESIZE
+    SwResize # SDL_SYSTEM_CURSOR_SW_RESIZE
+    WResize # SDL_SYSTEM_CURSOR_W_RESIZE
+    Coun # SDL_SYSTEM_CURSOR_COUN
   end
 
   enum MouseWheelDirection
-    MousewheelNormal # SDL_MOUSEWHEEL_NORMAL
-    MousewheelFlipped # SDL_MOUSEWHEEL_FLIPPED
+    Normal # SDL_MOUSEWHEEL_NORMAL
+    Flipped # SDL_MOUSEWHEEL_FLIPPED
   end
 
-  # TODO: Surface
-  # struct CursorFrameInfo
-  #   surface : Surface*
-  #   duration : UInt32
-  # end
+  struct CursorFrameInfo
+    surface : Surface*
+    duration : UInt32
+  end
 
   @[Flags]
   enum MouseButtonFlags : UInt32
-    Left    = 1
-    Middle  = 2
-    Right   = 3
-    X1      = 4
-    X2      = 5
+    Left
+    Middle
+    Right
+    X1
+    X2
   end
 
   # typedef void (SDLCALL *SDL_MouseMotionTransformCallback)(
@@ -54,6 +53,8 @@ lib LibSdl3
   #     SDL_MouseID mouseID,
   #     float *x, float *y
   # );
+  alias MouseMotionTransformCallback =
+    (Void*, UInt64, Window*, MouseID, Float32*, Float32*) -> Void
 
   # extern SDL_DECLSPEC bool SDLCALL SDL_HasMouse(void);
   fun has_mouse = SDL_HasMouse : Bool
@@ -82,9 +83,8 @@ lib LibSdl3
   # extern SDL_DECLSPEC bool SDLCALL SDL_WarpMouseGlobal(float x, float y);
   fun warp_mouse_global = SDL_WarpMouseGlobal(x : Float32, y : Float32) : Bool
 
-  # TODO: Surface
   # extern SDL_DECLSPEC bool SDLCALL SDL_SetRelativeMouseTransform(SDL_MouseMotionTransformCallback callback, void *userdata);
-  # fun set_relative_mouse_transform = SDL_SetRelativeMouseTransform(callback : MouseMotionTransformCallback, userdata : Void*) : Bool
+  fun set_relative_mouse_transform = SDL_SetRelativeMouseTransform(callback : MouseMotionTransformCallback, userdata : Void*) : Bool
 
   # extern SDL_DECLSPEC bool SDLCALL SDL_SetWindowRelativeMouseMode(SDL_Window *window, bool enabled);
   fun set_window_relative_mouse_mode = SDL_SetWindowRelativeMouseMode(window : Window*, enabled : Bool) : Bool
@@ -98,13 +98,11 @@ lib LibSdl3
   # extern SDL_DECLSPEC SDL_Cursor * SDLCALL SDL_CreateCursor(const Uint8 *data, const Uint8 *mask, int w, int h, int hot_x, int hot_y);
   fun create_cursor = SDL_CreateCursor(data : UInt8*, mask : UInt8*, w : Int, h : Int, hot_x : Int, hot_y : Int) : Cursor*
 
-  # TODO: Surface
   # extern SDL_DECLSPEC SDL_Cursor * SDLCALL SDL_CreateColorCursor(SDL_Surface *surface, int hot_x, int hot_y);
-  # fun create_color_cursor = SDL_CreateColorCursor(surface : Surface*, hot_x : Int, hot_y : Int) : Cursor*
+  fun create_color_cursor = SDL_CreateColorCursor(surface : Surface*, hot_x : Int, hot_y : Int) : Cursor*
 
-  # TODO: Surface
   # extern SDL_DECLSPEC SDL_Cursor *SDLCALL SDL_CreateAnimatedCursor(SDL_CursorFrameInfo *frames, int frame_count, int hot_x, int hot_y);
-  # fun create_animated_cursor = SDL_CreateAnimatedCursor(frames : CursorFrameInfo*, frame_count : Int, hot_x : Int, hot_y : Int) : Cursor*
+  fun create_animated_cursor = SDL_CreateAnimatedCursor(frames : CursorFrameInfo*, frame_count : Int, hot_x : Int, hot_y : Int) : Cursor*
 
   # extern SDL_DECLSPEC SDL_Cursor * SDLCALL SDL_CreateSystemCursor(SDL_SystemCursor id);
   fun create_system_cursor = SDL_CreateSystemCursor(id : SystemCursor) : Cursor*
