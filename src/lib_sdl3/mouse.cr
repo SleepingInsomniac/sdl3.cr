@@ -24,7 +24,7 @@ lib LibSdl3
     SResize # SDL_SYSTEM_CURSOR_S_RESIZE
     SwResize # SDL_SYSTEM_CURSOR_SW_RESIZE
     WResize # SDL_SYSTEM_CURSOR_W_RESIZE
-    Coun # SDL_SYSTEM_CURSOR_COUN
+    Count # SDL_SYSTEM_CURSOR_COUNT
   end
 
   enum MouseWheelDirection
