@@ -13,10 +13,13 @@ Sdl3.init(Sdl3::InitFlags::Video | Sdl3::InitFlags::Audio) do
   stream.flush
   stream.resume
 
-  loop do
-    case Sdl3::Events.poll
-    when Sdl3::Event::Quit
-      break
+  running = true
+  while running
+    while event = Sdl3::Events.poll
+      case event
+      when Sdl3::Event::Quit
+        running = false
+      end
     end
 
     renderer.clear

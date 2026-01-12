@@ -16,10 +16,13 @@ Sdl3.init(Sdl3::InitFlags::Video | Sdl3::InitFlags::Audio) do
   stream = Sdl3::Audio::Stream.open(Sdl3::Audio::Device.default_playback, spec)
   stream.resume
 
-  loop do
-    case Sdl3::Events.poll
-    when Sdl3::Event::Quit
-      break
+  running = true
+  while running
+    while event = Sdl3::Events.poll
+      case event
+      when Sdl3::Event::Quit
+        running = false
+      end
     end
 
     minimum_audio = (8000 * Sdl3::Audio.bytes_per_sample(spec.format)) // 2 # 8000 float samples per second. Half of that.

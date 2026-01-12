@@ -487,8 +487,12 @@ module Sdl3
 
   module Events
     def self.poll
-      Sdl3.raise_error unless LibSdl3.poll_event(out event)
-      Event.from(event)
+      ret = LibSdl3.poll_event(out event)
+      if ret > 0
+        Event.from(event)
+      else
+        nil
+      end
     end
 
     def self.pump

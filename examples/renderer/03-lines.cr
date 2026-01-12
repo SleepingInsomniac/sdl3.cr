@@ -17,11 +17,13 @@ Sdl3.init(LibSdl3::InitFlags::Video) do
     {100f32, 354f32}
   }
 
-  loop do
-    event = Sdl3::Events.poll
-    case event
-    when Sdl3::Event::Quit
-      break
+  running = true
+  while running
+    while event = Sdl3::Events.poll
+      case event
+      when Sdl3::Event::Quit
+        running = false
+      end
     end
 
     renderer.draw_color = {100u8, 100u8, 100u8, 255u8}

@@ -6,20 +6,22 @@ require "../../src/sdl3"
 Sdl3.init(Sdl3::InitFlags::Video) do
   window = Sdl3::Window.new("02-Primitives", 640, 480, Sdl3::Window::Flags::None)
   renderer = window.create_renderer
-  renderer.logical_presentation = {640, 480, LibSdl3::RendererLogicalPresentation::Letterbox}
+  renderer.logical_presentation = {640, 480, Sdl3::Renderer::LogicalPresentation::Letterbox}
 
-  points = StaticArray(LibSdl3::FPoint, 500).new do
-    LibSdl3::FPoint.new(x: rand(100.0..540.0), y: rand(100.0..380.0))
+  points = StaticArray(Sdl3::FPoint, 500).new do
+    Sdl3::FPoint.new(x: rand(100.0..540.0), y: rand(100.0..380.0))
   end
 
-  loop do
-    LibSdl3.poll_event(out event)
-    case event.type
-    when LibSdl3::EventType::Quit
-      break
+  running = true
+  while running
+    while event = Sdl3::Events.poll
+      case event
+      when Sdl3::Event::Quit
+        running = false
+      end
     end
 
-    rect = LibSdl3::FRect.new(x: 100, y: 100, w: 440, h: 280)
+    rect = Sdl3::FRect.new(x: 100, y: 100, w: 440, h: 280)
 
     renderer.draw_color = {33u8, 33u8, 33u8, 255u8}
     renderer.clear

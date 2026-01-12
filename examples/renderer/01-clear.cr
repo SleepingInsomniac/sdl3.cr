@@ -11,11 +11,13 @@ Sdl3.init(LibSdl3::InitFlags::Video) do
 
   started_at = Time.monotonic.total_milliseconds
 
-  loop do
-    event = Sdl3::Events.poll
-    case event
-    when Sdl3::Event::Quit
-      break
+  running = true
+  while running
+    while event = Sdl3::Events.poll
+      case event
+      when Sdl3::Event::Quit
+        running = false
+      end
     end
 
     elapsed_time = Time.monotonic.total_milliseconds - started_at
