@@ -86,8 +86,16 @@ module Sdl3
       LibSdl3.render_fill_rect(@pointer, rect)
     end
 
+    def fill_rect(rect : FRect)
+      fill_rect(pointerof(rect))
+    end
+
     def render_rect(rect : FRect*)
       LibSdl3.render_rect(@pointer, rect)
+    end
+
+    def render_rect(rect : FRect)
+      render_rect(pointerof(rect))
     end
 
     def render_rects(rects : FRect*, count : Int32)
