@@ -1,4 +1,4 @@
-@[Link("sdl3")]
+@[Link("SDL3", pkg_config: "sdl3")]
 lib LibSdl3
   alias Bool = LibC::Char
   alias Char = LibC::Char
