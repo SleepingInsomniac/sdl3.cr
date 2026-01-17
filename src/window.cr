@@ -1,6 +1,8 @@
 module Sdl3
   class Window < SdlObject(LibSdl3::Window*)
     alias Flags = LibSdl3::WindowFlags
+    alias ID = LibSdl3::WindowID
+
     @renderer : Renderer?
 
     def initialize(title : String, width : Int32, height : Int32, flags : Flags = Flags::None, @renderer = nil)
