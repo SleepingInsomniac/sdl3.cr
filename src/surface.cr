@@ -18,6 +18,10 @@ module Sdl3
       LibSdl3.destroy_surface(self)
     end
 
+    def save_png(path : String)
+      Sdl3.raise_error unless LibSdl3.save_png(self, path)
+    end
+
     def properties
       Properties.new(LibSdl3.get_surface_properties(self))
     end
