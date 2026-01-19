@@ -24,16 +24,19 @@ module Sdl3
       Window.new(ptr, owned: false) # borrowed pointer
     end
 
+    # https://wiki.libsdl.org/SDL3/SDL_GetMouseState
     def self.state
       button_flags = LibSdl3.get_mouse_state(out x, out y)
       {x: x, y: y, button_flags: button_flags}
     end
 
+    # https://wiki.libsdl.org/SDL3/SDL_GetGlobalMouseState
     def self.global_state
       button_flags = LibSdl3.get_global_mouse_state(out x, out y)
       {x: x, y: y, button_flags: button_flags}
     end
 
+    # https://wiki.libsdl.org/SDL3/SDL_GetRelativeMouseState
     def self.relative_state
       button_flags = LibSdl3.get_relative_mouse_state(out x, out y)
       {x: x, y: y, button_flags: button_flags}
