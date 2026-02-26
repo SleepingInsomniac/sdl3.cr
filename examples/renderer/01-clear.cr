@@ -9,7 +9,7 @@ Sdl3.init(LibSdl3::InitFlags::Video) do
   renderer = window.create_renderer
   renderer.logical_presentation = {640, 480, LibSdl3::RendererLogicalPresentation::Letterbox}
 
-  started_at = Time.monotonic.total_milliseconds
+  started_at = Time.instant
 
   running = true
   while running
@@ -20,8 +20,7 @@ Sdl3.init(LibSdl3::InitFlags::Video) do
       end
     end
 
-    elapsed_time = Time.monotonic.total_milliseconds - started_at
-    now = elapsed_time / 1000.0
+    now = started_at.elapsed.to_f
     red = 0.5 + 0.5 * Math.sin(now)
     green = 0.5 + 0.5 * Math.sin(now + Math::PI * 2 / 3)
     blue = 0.5 + 0.5 * Math.sin(now + Math::PI * 4 / 3)

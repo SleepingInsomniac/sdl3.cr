@@ -73,8 +73,7 @@ module Sdl3
 
     # https://wiki.libsdl.org/SDL3/SDL_UpdateTexture
     def update(rect : Rect?, pixels, pitch)
-      r = rect.try { |r| pointerof(r) } || Pointer(Rect).null
-      updated = LibSdl3.update_texture(self, r, pixels, pitch)
+      updated = LibSdl3.update_texture(self, rect, pixels, pitch)
       Sdl3.raise_error unless updated
     end
 
@@ -82,17 +81,15 @@ module Sdl3
     # fun updatenv_texture = SDL_UpdateNVTexture(texture : Texture*, rect : Rect*, yplane : UInt8*, ypitch : Int, u_vplane : UInt8*, u_vpitch : Int) : Bool
 
     # https://wiki.libsdl.org/SDL3/SDL_LockTexture
-    def unsafe_lock(rect : LibSdl3::Rect? = nil) : Tuple(Pointer(Void), Int32)
-      r = rect.try { |r| pointerof(r) } || Pointer(Rect).null
-      locked = LibSdl3.lock_texture(self, r, out pixels_pointer, out pitch)
+    def unsafe_lock(rect : Rect? = nil) : Tuple(Pointer(Void), Int32)
+      locked = LibSdl3.lock_texture(self, rect, out pixels_pointer, out pitch)
       Sdl3.raise_error unless locked
       {pixels_pointer, pitch}
     end
 
     # https://wiki.libsdl.org/SDL3/SDL_LockTexture
     def lock(rect : Rect? = nil) : Tuple(Slice(UInt8), Int32)
-      r = rect.try { |r| pointerof(r) } || Pointer(Rect).null
-      locked = LibSdl3.lock_texture(self, r, out pixels_pointer, out pitch)
+      locked = LibSdl3.lock_texture(self, rect, out pixels_pointer, out pitch)
       Sdl3.raise_error unless locked
       h = rect.try { |r| r.h } || size.last
       {Slice.new(pixels_pointer.as(UInt8*), h.to_i32 * pitch), pitch}
@@ -118,9 +115,15 @@ module Sdl3
     end
 
     # https://wiki.libsdl.org/SDL3/SDL_LockTextureToSurface
-    def lock_to_surface(rect : Rect?, surface : Surface)
-      r = rect.try { |r| pointerof(r) } || Pointer(Rect).null
-      LibSdl3.lock_texture_to_surface(self, r, surface)
+    def lock_to_surface(rect : Rect?, & : Surface ->)
+      result = LibSdl3.lock_texture_to_surface(self, rect, out surface_ptr)
+      Sdl3.raise_error unless result
+
+      begin
+        yield Surface.new(surface_ptr, owned: false)
+      ensure
+        LibSdl3.unlock_texture(self)
+      end
     end
   end
 end

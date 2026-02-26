@@ -12,7 +12,6 @@ module Sdl3
   alias Keymod      = LibSdl3::Keymod
   alias Point       = LibSdl3::Point
   alias FPoint      = LibSdl3::FPoint
-  alias Rect        = LibSdl3::Rect
   alias FRect       = LibSdl3::FRect
   alias Color       = LibSdl3::Color
 
@@ -52,3 +51,4 @@ require "./texture"
 require "./properties"
 require "./camera"
 require "./audio"
+require "./rect"

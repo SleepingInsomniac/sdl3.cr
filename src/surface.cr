@@ -80,11 +80,15 @@ module Sdl3
       LibSdl3.clear_surface(self, r, g, b, a)
     end
 
+    # https://wiki.libsdl.org/SDL3/SDL_FillSurfaceRect
+    def fill_rect(color : UInt32, rect : Rect? = nil)
+      result = LibSdl3.fill_surface_rect(self, rect, color)
+      Sdl3.raise_error unless result
+    end
+
     # https://wiki.libsdl.org/SDL3/SDL_BlitSurface
     def blit(dest : Surface, source_rect : Rect? = nil, dest_rect : Rect? = nil)
-      sr = source_rect.try { |r| pointerof(r) } || Pointer(Rect).null
-      dr = dest_rect.try { |r| pointerof(r) } || Pointer(Rect).null
-      LibSdl3.blit_surface(self, sr, dest, dr)
+      LibSdl3.blit_surface(self, source_rect, dest, dest_rect)
     end
 
     def convert(format : PixelFormat)
