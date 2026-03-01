@@ -18,9 +18,10 @@ module Sdl3
       end
     end
 
+    # https://wiki.libsdl.org/SDL3/SDL_GetMouseFocus
     def self.focused_window?
       ptr = LibSdl3.get_mouse_focus
-      return nil if ptr.null
+      return nil if ptr.null?
       Window.new(ptr, owned: false) # borrowed pointer
     end
 
